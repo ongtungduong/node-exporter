@@ -21,7 +21,7 @@ function create_user() {
 
 function create_systemd_service() {
     echo "Creating node_exporter systemd service..."
-sudo tee /etc/systemd/system/node_exporter.service > /dev/null << EOF
+    sudo tee /etc/systemd/system/node_exporter.service > /dev/null << EOF
 [Unit]
 Description=Prometheus Node Exporter
 After=network.target
