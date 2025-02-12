@@ -1,16 +1,13 @@
 # node-exporter
 
-## Clone the repository and run the install script:
+**Script only tested on Ubuntu**
+
+## Usage
+
+Run the following command to install the node-exporter:
 
 ```bash
-bash install.sh
-```
-
-## Use different port
-
-**For example, to use port 17017, run the following command:**
-```bash
-EXPORTER_PORT="17017" bash install.sh
+bash <(curl -sSL https://github.com/ongtungduong/node-exporter/raw/main/install.sh)
 ```
 
 

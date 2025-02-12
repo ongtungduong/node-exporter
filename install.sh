@@ -1,7 +1,7 @@
 # !/bin/bash
 
 EXPORTER_VERSION=$(curl -s "https://api.github.com/repos/prometheus/node_exporter/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-read -rp "Enter the port number for the Node Exporter: " -e -i 9100 NODE_EXPORTER_PORT
+read -rp "Enter the port number for the Node Exporter (default: 9100): " -e -i "9100" NODE_EXPORTER_PORT
 
 function install_node_exporter() {
     echo "Downloading Node Exporter v${EXPORTER_VERSION}..."
