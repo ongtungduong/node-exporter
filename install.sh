@@ -1,8 +1,7 @@
 # !/bin/bash
 
-LATEST_VERSION=$(curl -s "https://api.github.com/repos/prometheus/node_exporter/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-EXPORTER_VERSION=${EXPORTER_VERSION:-$LATEST_VERSION}
-EXPORTER_PORT=${EXPORTER_PORT:-9100}
+EXPORTER_VERSION=$(curl -s "https://api.github.com/repos/prometheus/node_exporter/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+read -rp "Enter the port number for the Node Exporter: " -e -i 9100 NODE_EXPORTER_PORT
 
 function install_node_exporter() {
     echo "Downloading Node Exporter v${EXPORTER_VERSION}..."
@@ -29,7 +28,7 @@ After=network.target
 [Service]
 User=node_exporter
 Group=node_exporter
-ExecStart=/usr/local/bin/node_exporter --web.listen-address=:$EXPORTER_PORT
+ExecStart=/usr/local/bin/node_exporter --web.listen-address=:$NODE_EXPORTER_PORT
 
 [Install]
 WantedBy=multi-user.target
@@ -42,7 +41,7 @@ function enable_and_start_service() {
     sudo systemctl enable node_exporter --now
 
     echo "Node Exporter installation completed."
-    echo "You can now access the metrics at http://localhost:$EXPORTER_PORT/metrics"
+    echo "You can now access the metrics at http://localhost:$NODE_EXPORTER_PORT/metrics"
 }
 
 install_node_exporter
