@@ -3,6 +3,11 @@
 EXPORTER_VERSION=$(curl -s "https://api.github.com/repos/prometheus/node_exporter/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
 read -rp "Enter the port number for the Node Exporter (default: 9100): " -e -i "9100" NODE_EXPORTER_PORT
 
+if lsof -i:$NODE_EXPORTER_PORT > /dev/null 2>&1; then
+    echo "Port $NODE_EXPORTER_PORT is already in use. Please choose another port."
+    exit 1
+fi
+
 function install_node_exporter() {
     echo "Downloading Node Exporter v${EXPORTER_VERSION}..."
     curl -LO https://github.com/prometheus/node_exporter/releases/download/v$EXPORTER_VERSION/node_exporter-$EXPORTER_VERSION.linux-amd64.tar.gz
